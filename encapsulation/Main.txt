@@ -1,0 +1,102 @@
+class BankAccount {
+
+    private final int accountNumber;
+    private String accountHolder;
+    private double balance;
+
+    // Constructor
+    public BankAccount(int accountNumber, String accountHolder, double balance) {
+
+        if (accountNumber <= 0) {
+            throw new IllegalArgumentException("Invalid account number");
+        }
+
+        if (accountHolder == null || accountHolder.isBlank()) {
+            throw new IllegalArgumentException("Invalid account holder name");
+        }
+
+        if (balance < 0) {
+            throw new IllegalArgumentException("Balance cannot be negative");
+        }
+
+        this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
+        this.balance = balance;
+    }
+
+    // Getter: account number can be read, but not modified
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    // Getter
+    public String getAccountHolder() {
+        return accountHolder;
+    }
+
+    // Setter with validation
+    public void setAccountHolder(String accountHolder) {
+
+        if (accountHolder == null || accountHolder.isBlank()) {
+            throw new IllegalArgumentException("Invalid account holder name");
+        }
+
+        this.accountHolder = accountHolder;
+    }
+
+    // Getter
+    public double getBalance() {
+        return balance;
+    }
+
+    // Business behavior
+    public void deposit(double amount) {
+
+        if (amount <= 0) {
+            throw new IllegalArgumentException(
+                "Deposit amount must be greater than zero"
+            );
+        }
+
+        balance += amount;
+    }
+
+    // Business behavior
+    public void withdraw(double amount) {
+
+        if (amount <= 0) {
+            throw new IllegalArgumentException(
+                "Withdrawal amount must be greater than zero"
+            );
+        }
+
+        if (amount > balance) {
+            throw new IllegalArgumentException(
+                "Insufficient balance"
+            );
+        }
+
+        balance -= amount;
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        BankAccount account =
+            new BankAccount(101, "Rahul", 5000);
+
+        System.out.println(account.getBalance());
+
+        account.deposit(2000);
+
+        account.withdraw(1000);
+
+        account.setAccountHolder("Arun");
+
+        System.out.println(account.getAccountNumber());
+        System.out.println(account.getAccountHolder());
+        System.out.println(account.getBalance());
+    }
+}
